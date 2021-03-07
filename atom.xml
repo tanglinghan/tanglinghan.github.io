@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://tanglinghan.github.io</id>
     <title>山河在</title>
-    <updated>2021-03-07T06:43:15.825Z</updated>
+    <updated>2021-03-07T11:40:56.752Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://tanglinghan.github.io"/>
     <link rel="self" href="https://tanglinghan.github.io/atom.xml"/>
@@ -83,6 +83,213 @@ emmm..., 给他来一下🔨</p>
 十分钟后.......<br>
 暂时OK.......<br>
 🤣🤣CPU一直在50%....感觉还是有问题...🤣🤣重装系统了.........</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Linux - 安装MySQL8.0]]></title>
+        <id>https://tanglinghan.github.io/post/linux-an-zhuang-mysql80/</id>
+        <link href="https://tanglinghan.github.io/post/linux-an-zhuang-mysql80/">
+        </link>
+        <updated>2020-03-19T09:42:24.000Z</updated>
+        <content type="html"><![CDATA[<p><a href="https://dev.mysql.com/get/Downloads/MySQL-8.0/mysql-8.0.23-linux-glibc2.12-x86_64.tar.xz">MySQL8.0下载</a></p>
+<ol>
+<li>安装MySQL</li>
+</ol>
+<pre><code># 解压
+tar -xvf mysql-8.0.23-linux-glibc2.12-x86_64.tar.xz
+# 重命名文件夹
+mv mysql-8.0.23-linux-glibc2.12-x86_64 mysql
+# 进入mysql目录并新建data文件夹
+cd mysql;mkdir data
+</code></pre>
+<p>创建mysql用户组和用户并修改权限</p>
+<pre><code>#创建mysql组
+groupadd mysql
+#创建用户mysql
+useradd -r -g mysql mysql
+#授予用户mysql权限
+chown mysql:mysql -R /usr/local/mysql/
+# 配置文件中socket目录在/var/lib/mysql/ ,若没有此文件夹 可手动创建,并赋予用户权限
+chown mysql:mysql -R /var/lib/mysql/
+</code></pre>
+<blockquote>
+<p>useradd -r 创建系统用户 -g 为用户分配组<br>
+chown 用户：组  -R （递归修改） 目录</p>
+</blockquote>
+<p>新建配置文件my.cnf, 修改连接端口为3307</p>
+<pre><code>vim /etc/my.cnf
+# 添加以下内容
+[mysql]
+# 设置mysql客户端默认字符集
+default-character-set=utf8mb4
+socket=/var/lib/mysql/mysql.sock
+[mysqld]
+# mysql日志文件
+slow_query_log_file=/usr/local/mysql/sql_log/slow_querylog.log
+socket=/var/lib/mysql/mysql.sock
+pid_file = /var/lib/mysql/mysqld.pid
+port=3307
+user=mysql
+basedir=/usr/local/mysql
+datadir=/usr/local/mysql/data
+# 允许最大连接数
+max_connections=200
+# 允许连接失败的次数。这是为了防止有人从该主机试图攻击数据库系统
+max_connect_errors=10
+#服务端使用的字符集默认为utf8mb4
+character_set_server=utf8mb4
+# 创建新表时将使⽤的默认存储引擎
+default-storage-engine=INNODB
+lower_case_table_names=1
+max_allowed_packet=16M
+# 默认使用“mysql_native_password”插件认证
+default_authentication_plugin=mysql_native_password
+[client]
+# 设置mysql客户端连接服务端时默认使用的端口
+port=3307
+default-character-set=utf8mb4
+</code></pre>
+<p>数据库初始化</p>
+<pre><code>/usr/local/mysql/bin/mysqld  --initialize  --user=mysql --basedir=/usr/local/mysql/ --datadir=/usr/local/mysql/data/ 
+</code></pre>
+<blockquote>
+<p>遇见异常<br>
+<img src="https://tanglinghan.github.io/post-images/1615113330488.png" alt="" loading="lazy"><br>
+yum install libaio</p>
+</blockquote>
+<p>记得保存初始化密码<br>
+<img src="https://tanglinghan.github.io/post-images/1615113519957.png" alt="" loading="lazy"><br>
+进入安装目录<code>support-files</code>启动mysql,<code>./support-files/mysql.server start</code>, 如果出现类似<code>however file don't exists.</code>这种错误, 手动创建文件就好了<br>
+<img src="https://tanglinghan.github.io/post-images/1615113753067.png" alt="" loading="lazy"></p>
+<p>修改密码</p>
+<pre><code>cd usr/local/mysql/bin
+./mysql -u root -p
+# 修改密码
+alter user 'root'@'localhost' identified by 'your_password';
+# 刷新权限
+flush privileges;
+#  修改root用户可以远程连接
+update mysql.user set host='%' where user='root';
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Linux - 安装RabbitMQ]]></title>
+        <id>https://tanglinghan.github.io/post/linux-an-zhuang-rabbitmq/</id>
+        <link href="https://tanglinghan.github.io/post/linux-an-zhuang-rabbitmq/">
+        </link>
+        <updated>2019-10-28T07:28:56.000Z</updated>
+        <content type="html"><![CDATA[<p>官方页面: <a href="https://www.rabbitmq.com/download.html">https://www.rabbitmq.com/download.html</a><br>
+不同版本rabbitmq版本支持的erlang版本不同, <a href="https://www.rabbitmq.com/which-erlang.html">点击查看对照表</a><br>
+安装版本:</p>
+<ul>
+<li><a href="https://github.com/rabbitmq/rabbitmq-server/releases/download/v3.8.14/rabbitmq-server-generic-unix-3.8.14.tar.xz">rabbitmq-server-generic-unix-3.8.14.tar</a></li>
+<li>otp_src_23.2.7.tar.gz</li>
+</ul>
+<ol>
+<li>
+<h2 id="安装依赖环境">安装依赖环境</h2>
+</li>
+</ol>
+<pre><code> yum install gcc glibc-devel make ncurses-devel openssl-devel xmlto
+</code></pre>
+<ol start="2">
+<li>
+<h2 id="安装-erlang">安装 erlang`</h2>
+</li>
+</ol>
+<pre><code> tar -zxvf otp_src_23.2.7.tar.gz
+ cd otp_src_23.2.7
+ # 编译安装
+  ./configure --prefix=/usr/local/erlang
+  make &amp;&amp; make install
+  # 测试是否安装成功
+  cd /usr/local/erlang/bin/ 
+   ./erl
+
+[root@hecs-x-large-2-linux-20210304000224 bin]# ./erl
+Erlang/OTP 23 [erts-11.1.8] [source] [64-bit] [smp:2:2] [ds:2:2:10] [async-threads:1] [hipe]
+
+Eshell V11.1.8  (abort with ^G)
+</code></pre>
+<p><code>ctrl+c</code>退出, 配置环境变量:</p>
+<pre><code> vim /etc/profile
+ # 按 i 进入编辑模式, 末尾加上
+ export PATH=$PATH:/usr/local/erlang/bin
+ # shift+冒号 进入底行命令模式 输入 wq 保存退出
+</code></pre>
+<ol start="3">
+<li>
+<h2 id="安装rabbitmq">安装RabbitMQ</h2>
+</li>
+</ol>
+<pre><code>tar -xvf rabbitmq-server-generic-unix-3.8.14.tar
+# 个人习惯 将文件夹命名为rabbitmq
+mv rabbitmq_server-3.8.14 rabbitmq
+# 配置rabbitmq环境变量
+vim /etc/profile
+export PATH=$PATH:/usr/local/rabbitmq/sbin
+source /etc/profile
+</code></pre>
+<h3 id="基本命令">基本命令:</h3>
+<pre><code># 启动
+rabbitmq-server -detached
+# 关闭
+rabbitmqctl stop
+# 查看状态
+rabbitmqctl status
+</code></pre>
+<p>启动web页面插件: <code>rabbitmq-plugins enable rabbitmq_management</code><br>
+访问管理页面：<a href="http://127.0.0.1:15672">http://127.0.0.1:15672</a>   web端口默认为15672</p>
+<h3 id="账号配置">账号配置</h3>
+<p>rabbitmq有一个默认的用户名和密码，<code>guest</code>和<code>guest</code>, 但该用户名和密码只允许本地访问，如果是远程操作的话，需要创建新的用户名和密码；</p>
+<pre><code># 添加用户，后面两个参数分别是用户名和密码 
+rabbitmqctl add_user [username] [passwd]
+# 添加权限  
+rabbitmqctl set_permissions -p / [username] &quot;.*&quot; &quot;.*&quot; &quot;.*&quot; 
+# 修改用户角色,将用户设为管理员
+rabbitmqctl set_user_tags [username] administrator 
+</code></pre>
+<ol>
+<li>
+<h2 id="修改默认端口">修改默认端口</h2>
+</li>
+</ol>
+<p><a href="https://github.com/rabbitmq/rabbitmq-server/blob/v3.8.x/deps/rabbit/docs/rabbitmq.conf.example">https://github.com/rabbitmq/rabbitmq-server/blob/v3.8.x/deps/rabbit/docs/rabbitmq.conf.example</a><br>
+修改rabbitmq-default</p>
+<pre><code>vim /usr/local/vim rabbitmq/sbin/rabbitmq-defaults
+# 加上这句话
+CONFIG_FILE=${RABBITMQ_HOME}/rabbitmq/etc/rabbitmq/rabbitmq.conf
+</code></pre>
+<p>在安装目录<code>etc/rabbitmq/</code>添加配置文件<code>rabbitmq.conf</code><br>
+<code>cd /usr/local/rabbitmq/etc/rabbitmq</code>然后<code>vim rabbitmq.conf</code>, 按<code>i</code>进入编辑模式, 修改以下内容, shift+冒号进入底行命令模式输入<code>wq</code>, 按<code>enter</code>保存退出</p>
+<pre><code>#数据管理端口（默认端口为5672）
+listeners.tcp.default=5673
+#界面管理端口（默认端口为15672）
+management.tcp.port=25672
+management.tcp.ip=0.0.0.0
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Linux - 配置jdk环境]]></title>
+        <id>https://tanglinghan.github.io/post/linux-pei-zhi-jdk-huan-jing/</id>
+        <link href="https://tanglinghan.github.io/post/linux-pei-zhi-jdk-huan-jing/">
+        </link>
+        <updated>2019-08-07T07:24:13.000Z</updated>
+        <content type="html"><![CDATA[<pre><code>vim /etc/profile
+</code></pre>
+<p>按<code>i</code>进入编辑模式, 在最后加上:</p>
+<pre><code>export JAVA_HOME=/usr/local/jdk/jdk1.8.0_251
+export JRE_HOME=${JAVA_HOME}/jre
+export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib:$CLASSPATH
+export JAVA_PATH=${JAVA_HOME}/bin:${JRE_HOME}/bin
+export PATH=$PATH:${JAVA_PATH}
+</code></pre>
+<p><code>JAVA_HOME</code>填写你jdk解压目录<br>
+然后重新加载profile文件:</p>
+<pre><code>source /etc/profile
+</code></pre>
 ]]></content>
     </entry>
     <entry>

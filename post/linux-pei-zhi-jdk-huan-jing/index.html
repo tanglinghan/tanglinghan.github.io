@@ -2,36 +2,22 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>关于 | 山河在</title>
+<title>Linux - 配置jdk环境 | 山河在</title>
 <link rel="shortcut icon" href="https://tanglinghan.github.io/favicon.ico?v=1615117252070">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://tanglinghan.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="关于 | 山河在 - Atom Feed" href="https://tanglinghan.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="Linux - 配置jdk环境 | 山河在 - Atom Feed" href="https://tanglinghan.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="
-欢迎来到我的小站呀，很高兴遇见你！🤝
+    <meta name="description" content="vim /etc/profile
 
-🏠 关于本站
-
-本站..本站..本站是...是什么呢?🌊
-
-👨‍💻 博主是谁
-
-垃圾小码农一枚💻
-
-⛹ 兴趣爱好
-
-啥也不会
-
-📬 联系我呀
-
-地球见
-
-..." />
-    <meta name="keywords" content="" />
+按i进入编辑模式, 在最后加上:
+export JAVA_HOME=/usr/local/jdk/jdk1.8.0_251
+export JRE_HOME=${JAVA_HOME}/jre
+export ..." />
+    <meta name="keywords" content="环境安装,Linux" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
@@ -93,58 +79,59 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              关于
+              Linux - 配置jdk环境
             </h2>
             <div class="post-info">
               <span>
-                2019-01-25
+                2019-08-07
               </span>
               <span>
                 1 min read
               </span>
               
+                <a href="https://tanglinghan.github.io/tag/qeJTjrwYS/" class="post-tag">
+                  # 环境安装
+                </a>
+              
+                <a href="https://tanglinghan.github.io/tag/fG6OFigaz/" class="post-tag">
+                  # Linux
+                </a>
+              
             </div>
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <blockquote>
-<p>欢迎来到我的小站呀，很高兴遇见你！🤝</p>
-</blockquote>
-<h2 id="关于本站">🏠 关于本站</h2>
-<ul>
-<li>本站..本站..本站是...是什么呢?🌊</li>
-</ul>
-<h2 id="博主是谁">👨‍💻 博主是谁</h2>
-<ul>
-<li>垃圾小码农一枚💻</li>
-</ul>
-<h2 id="兴趣爱好">⛹ 兴趣爱好</h2>
-<ul>
-<li>啥也不会</li>
-</ul>
-<h2 id="联系我呀">📬 联系我呀</h2>
-<ul>
-<li>地球见</li>
-</ul>
+                <pre><code>vim /etc/profile
+</code></pre>
+<p>按<code>i</code>进入编辑模式, 在最后加上:</p>
+<pre><code>export JAVA_HOME=/usr/local/jdk/jdk1.8.0_251
+export JRE_HOME=${JAVA_HOME}/jre
+export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib:$CLASSPATH
+export JAVA_PATH=${JAVA_HOME}/bin:${JRE_HOME}/bin
+export PATH=$PATH:${JAVA_PATH}
+</code></pre>
+<p><code>JAVA_HOME</code>填写你jdk解压目录<br>
+然后重新加载profile文件:</p>
+<pre><code>source /etc/profile
+</code></pre>
 
               </div>
               <div class="toc-container">
-                <ul class="markdownIt-TOC">
-<li>
-<ul>
-<li><a href="#%E5%85%B3%E4%BA%8E%E6%9C%AC%E7%AB%99">🏠 关于本站</a></li>
-<li><a href="#%E5%8D%9A%E4%B8%BB%E6%98%AF%E8%B0%81">👨‍💻 博主是谁</a></li>
-<li><a href="#%E5%85%B4%E8%B6%A3%E7%88%B1%E5%A5%BD">⛹ 兴趣爱好</a></li>
-<li><a href="#%E8%81%94%E7%B3%BB%E6%88%91%E5%91%80">📬 联系我呀</a></li>
-</ul>
-</li>
-</ul>
-
+                
               </div>
             </div>
           </article>
         </div>
 
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://tanglinghan.github.io/post/hello-guys/">
+              <h3 class="post-title">
+                Hello Guys!
+              </h3>
+            </a>
+          </div>
         
 
         
