@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://tanglinghan.github.io</id>
     <title>山河在</title>
-    <updated>2021-03-03T14:58:32.365Z</updated>
+    <updated>2021-03-07T03:33:13.970Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://tanglinghan.github.io"/>
     <link rel="self" href="https://tanglinghan.github.io/atom.xml"/>
@@ -10,6 +10,58 @@
     <logo>https://tanglinghan.github.io/images/avatar.png</logo>
     <icon>https://tanglinghan.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, 山河在</rights>
+    <entry>
+        <title type="html"><![CDATA[记一次服务器惨遭挖矿]]></title>
+        <id>https://tanglinghan.github.io/post/jiyiciwakuang/</id>
+        <link href="https://tanglinghan.github.io/post/jiyiciwakuang/">
+        </link>
+        <updated>2021-03-07T02:31:18.000Z</updated>
+        <content type="html"><![CDATA[<p>登进服务器一看CPU占用情况, 感觉不对劲(前天刚发现公司服务器惨遭挖矿,隐约之间已经猜到点什么东西, 有点兴奋), top一看, 呦, 好家伙:<br>
+<img src="https://tanglinghan.github.io/post-images/1615086285423.png" alt="" loading="lazy"></p>
+<ol>
+<li>首先查看定时任务：</li>
+</ol>
+<pre><code>crontab -l
+</code></pre>
+<p><img src="https://tanglinghan.github.io/post-images/1615086133167.png" alt="" loading="lazy"><br>
+删了它重启crond服务</p>
+<pre><code>systemctl restart crond
+</code></pre>
+<ol start="2">
+<li>然后找到挖矿程序进程, kill掉</li>
+</ol>
+<pre><code>ps -aux | grep kinsing
+ps -aux | grep kdevtmpfsi
+</code></pre>
+<p><img src="https://tanglinghan.github.io/post-images/1615086638158.png" alt="" loading="lazy"><br>
+3. 找到源文件, 删除</p>
+<pre><code>cd /tmp
+rm kdevtmpfsi
+[root@hecs-x-large-2-linux-20210304000224 tmp]# rm kdevtmpfsi
+ rm: remove regular file ‘kdevtmpfsi’? y
+
+cd /etc
+rm kinsing
+[root@hecs-x-large-2-linux-20210304000224 etc]# rm kinsing
+rm: remove regular file ‘kinsing’? y
+
+</code></pre>
+<p>五分钟后.....好家伙, 又来了.....<br>
+这次进程搜不到了...<br>
+<img src="https://tanglinghan.github.io/post-images/1615087227831.png" alt="" loading="lazy"><br>
+然后一看定时任务:<br>
+<img src="https://tanglinghan.github.io/post-images/1615087233955.png" alt="" loading="lazy"><br>
+又回来了<br>
+重复上面操作删除定时任务, 重启服务, 通过top命令看到它的PID, <code>kill -9 2627</code><br>
+30秒后.....???</p>
+<pre><code>  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND
+ 3588 root      20   0  515536   1724    928 S 100.0  0.0   1:30.83 kdevtmpfsi
+19380 root      20   0 3164884 558104   6312 S   1.0 14.4  13:03.55 java
+ 2024 root      20   0 3715112 338048   7168 S   0.3  8.7   2:57.88 java
+ 2252 root      20   0 3703328 356088   6640 S   0.3  9.2   3:27.96 java
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Hello Guys!]]></title>
         <id>https://tanglinghan.github.io/post/hello-guys/</id>

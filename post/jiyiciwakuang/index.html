@@ -2,17 +2,26 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Hello Guys! | 山河在</title>
+<title>记一次服务器惨遭挖矿 | 山河在</title>
 <link rel="shortcut icon" href="https://tanglinghan.github.io/favicon.ico?v=1615087988606">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://tanglinghan.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="Hello Guys! | 山河在 - Atom Feed" href="https://tanglinghan.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="记一次服务器惨遭挖矿 | 山河在 - Atom Feed" href="https://tanglinghan.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="" />
-    <meta name="keywords" content="Hello" />
+    <meta name="description" content="登进服务器一看CPU占用情况, 感觉不对劲(前天刚发现公司服务器惨遭挖矿,隐约之间已经猜到点什么东西, 有点兴奋), top一看, 呦, 好家伙:
+
+
+首先查看定时任务：
+
+crontab -l
+
+
+删了它重启crond服务
+systemc..." />
+    <meta name="keywords" content="Linux" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
@@ -74,25 +83,71 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              Hello Guys!
+              记一次服务器惨遭挖矿
             </h2>
             <div class="post-info">
               <span>
-                2018-12-12
+                2021-03-07
               </span>
               <span>
-                0 min read
+                2 min read
               </span>
               
-                <a href="https://tanglinghan.github.io/tag/aoMeMNXDl/" class="post-tag">
-                  # Hello
+                <a href="https://tanglinghan.github.io/tag/fG6OFigaz/" class="post-tag">
+                  # Linux
                 </a>
               
             </div>
             
+              <img class="post-feature-image" src="https://tanglinghan.github.io/post-images/jiyiciwakuang.png" alt="">
+            
             <div class="post-content-wrapper">
               <div class="post-content">
-                
+                <p>登进服务器一看CPU占用情况, 感觉不对劲(前天刚发现公司服务器惨遭挖矿,隐约之间已经猜到点什么东西, 有点兴奋), top一看, 呦, 好家伙:<br>
+<img src="https://tanglinghan.github.io/post-images/1615086285423.png" alt="" loading="lazy"></p>
+<ol>
+<li>首先查看定时任务：</li>
+</ol>
+<pre><code>crontab -l
+</code></pre>
+<p><img src="https://tanglinghan.github.io/post-images/1615086133167.png" alt="" loading="lazy"><br>
+删了它重启crond服务</p>
+<pre><code>systemctl restart crond
+</code></pre>
+<ol start="2">
+<li>然后找到挖矿程序进程, kill掉</li>
+</ol>
+<pre><code>ps -aux | grep kinsing
+ps -aux | grep kdevtmpfsi
+</code></pre>
+<p><img src="https://tanglinghan.github.io/post-images/1615086638158.png" alt="" loading="lazy"><br>
+3. 找到源文件, 删除</p>
+<pre><code>cd /tmp
+rm kdevtmpfsi
+[root@hecs-x-large-2-linux-20210304000224 tmp]# rm kdevtmpfsi
+ rm: remove regular file ‘kdevtmpfsi’? y
+
+cd /etc
+rm kinsing
+[root@hecs-x-large-2-linux-20210304000224 etc]# rm kinsing
+rm: remove regular file ‘kinsing’? y
+
+</code></pre>
+<p>五分钟后.....好家伙, 又来了.....<br>
+这次进程搜不到了...<br>
+<img src="https://tanglinghan.github.io/post-images/1615087227831.png" alt="" loading="lazy"><br>
+然后一看定时任务:<br>
+<img src="https://tanglinghan.github.io/post-images/1615087233955.png" alt="" loading="lazy"><br>
+又回来了<br>
+重复上面操作删除定时任务, 重启服务, 通过top命令看到它的PID, <code>kill -9 2627</code><br>
+30秒后.....???</p>
+<pre><code>  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND
+ 3588 root      20   0  515536   1724    928 S 100.0  0.0   1:30.83 kdevtmpfsi
+19380 root      20   0 3164884 558104   6312 S   1.0 14.4  13:03.55 java
+ 2024 root      20   0 3715112 338048   7168 S   0.3  8.7   2:57.88 java
+ 2252 root      20   0 3703328 356088   6640 S   0.3  9.2   3:27.96 java
+</code></pre>
+
               </div>
               <div class="toc-container">
                 
@@ -101,6 +156,15 @@
           </article>
         </div>
 
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://tanglinghan.github.io/post/hello-guys/">
+              <h3 class="post-title">
+                Hello Guys!
+              </h3>
+            </a>
+          </div>
         
 
         
