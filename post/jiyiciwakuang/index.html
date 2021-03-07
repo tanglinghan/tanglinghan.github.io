@@ -1,109 +1,106 @@
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" >
+
 <title>记一次服务器惨遭挖矿 | 山河在</title>
-<link rel="shortcut icon" href="https://tanglinghan.github.io/favicon.ico?v=1615119706559">
-<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<meta name="description" content="唧唧啵啵耶">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="shortcut icon" href="https://tanglinghan.github.io/favicon.ico?v=1615123683848">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="stylesheet" href="https://unpkg.com/papercss@1.6.1/dist/paper.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://tanglinghan.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="记一次服务器惨遭挖矿 | 山河在 - Atom Feed" href="https://tanglinghan.github.io/atom.xml">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
 
-    <meta name="description" content="登进服务器一看CPU占用情况, 感觉不对劲(前天刚发现公司服务器惨遭挖矿,隐约之间已经猜到点什么东西, 有点兴奋), top一看, 呦, 好家伙:
+  
+
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
 
 
-
-首先查看定时任务：
-
-crontab -l
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 
 
-crontab -e编辑定时任务, 按..." />
-    <meta name="keywords" content="Linux" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
-    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
   <body>
-    <div class="main">
-      <div class="main-content">
-        <div class="site-header">
-  <a href="https://tanglinghan.github.io">
-  <img class="avatar" src="https://tanglinghan.github.io/images/avatar.png?v=1615119706559" alt="">
-  </a>
-  <h1 class="site-title">
-    山河在
-  </h1>
-  <p class="site-description">
-    唧唧啵啵耶
-  </p>
-  <div class="menu-container">
-    
-      
-        <a href="/" class="menu">
-          首页
-        </a>
-      
-    
-      
-        <a href="/archives" class="menu">
-          归档
-        </a>
-      
-    
-      
-        <a href="/tags" class="menu">
-          标签
-        </a>
-      
-    
-      
-        <a href="/post/about" class="menu">
-          关于
-        </a>
-      
-    
+  
+    <nav class="navbar border fixed split-nav">
+  <div class="nav-brand">
+    <h3><a href="https://tanglinghan.github.io">山河在</a></h3>
   </div>
-  <div class="social-container">
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
+  <div class="collapsible">
+    <input id="collapsible1" type="checkbox" name="collapsible1">
+    <button>
+      <label for="collapsible1">
+        <div class="bar1"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
+      </label>
+    </button>
+    <div class="collapsible-body">
+      <ul class="inline">
+        
+          <li>
+            
+              <a href="/" class="menu">
+                首页
+              </a>
+            
+          </li>
+        
+          <li>
+            
+              <a href="/archives" class="menu">
+                归档
+              </a>
+            
+          </li>
+        
+          <li>
+            
+              <a href="/tags" class="menu">
+                标签
+              </a>
+            
+          </li>
+        
+          <li>
+            
+              <a href="/post/about" class="menu">
+                关于
+              </a>
+            
+          </li>
+        
+      </ul>
+    </div>
   </div>
-</div>
+</nav>
 
-        <div class="post-detail">
-          <article class="post">
-            <h2 class="post-title">
-              记一次服务器惨遭挖矿
-            </h2>
-            <div class="post-info">
-              <span>
-                2021-03-07
-              </span>
-              <span>
-                3 min read
-              </span>
+    <div id="top" class="row site">
+      <div class="sm-12 md-8 col">
+        <div class="paper">
+          <article class="article">
+            <h1>记一次服务器惨遭挖矿</h1>
+            <p class="article-meta">
+              2021-03-07
               
-                <a href="https://tanglinghan.github.io/tag/fG6OFigaz/" class="post-tag">
-                  # Linux
+                <a href="https://tanglinghan.github.io/tag/fG6OFigaz/" class="badge ">
+                  Linux
                 </a>
               
-            </div>
+            </p>
             
-              <img class="post-feature-image" src="https://tanglinghan.github.io/post-images/jiyiciwakuang.png" alt="">
+              <img src="https://tanglinghan.github.io/post-images/jiyiciwakuang.png" alt="记一次服务器惨遭挖矿">
             
-            <div class="post-content-wrapper">
-              <div class="post-content">
-                <p>登进服务器一看CPU占用情况, 感觉不对劲(前天刚发现公司服务器惨遭挖矿,隐约之间已经猜到点什么东西, 有点兴奋), top一看, 呦, 好家伙:</p>
+            <div class="post-content">
+              <p>登进服务器一看CPU占用情况, 感觉不对劲(前天刚发现公司服务器惨遭挖矿,隐约之间已经猜到点什么东西, 有点兴奋), top一看, 呦, 好家伙:</p>
 <!-- more -->
 <figure data-type="image" tabindex="1"><img src="https://tanglinghan.github.io/post-images/1615086285423.png" alt="" loading="lazy"></figure>
 <ol>
@@ -169,102 +166,161 @@ emmm..., 给他来一下🔨</p>
 暂时OK.......<br>
 🤣🤣CPU一直在50%....感觉还是有问题...🤣🤣重装系统了.........</p>
 
-              </div>
-              <div class="toc-container">
-                
-              </div>
             </div>
           </article>
         </div>
-
-        
-          <div class="next-post">
-            <div class="next">下一篇</div>
-            <a href="https://tanglinghan.github.io/post/linux-an-zhuang-mysql80/">
-              <h3 class="post-title">
-                Linux - 安装MySQL8.0
-              </h3>
-            </a>
-          </div>
-        
-
+        <div class="paper" data-aos="fade-in">
+          
+            <div class="next-post">
+              <div class="next">
+                下一篇
+              </div>
+              <a href="https://tanglinghan.github.io/post/linux-an-zhuang-mysql80/">
+                <h3 class="post-title">
+                  Linux - 安装MySQL8.0
+                </h3>
+              </a>
+            </div>
+          
+        </div>
         
           
-            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
-<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+            <div class="paper" data-aos="fade-in">
+              <div id="gitalk-container"></div>
+            </div>
+          
 
-<div id="gitalk-container"></div>
+          
+        
+      </div>
 
-<script>
+      <div class="sm-12 md-4 col sidebar">
+  <div class="paper info-container">
+    <img src="https://tanglinghan.github.io/images/avatar.png?v=1615123683848" class="no-responsive avatar">
+    <div class="text-muted">唧唧啵啵耶</div>
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+  </div>
+  <div class="paper">
+    <div class="sidebar-title">
+      最新文章
+    </div>
+    <div class="row">
+      <ul>
+        
+          
+            <li>
+              <a href="https://tanglinghan.github.io/post/jiyiciwakuang/">记一次服务器惨遭挖矿</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://tanglinghan.github.io/post/linux-an-zhuang-mysql80/">Linux - 安装MySQL8.0</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://tanglinghan.github.io/post/linux-an-zhuang-rabbitmq/">Linux - 安装RabbitMQ</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://tanglinghan.github.io/post/linux-pei-zhi-jdk-huan-jing/">Linux - 配置jdk环境</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://tanglinghan.github.io/post/about/">关于</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://tanglinghan.github.io/post/hello-guys/">Hello Guys!</a>
+            </li>
+          
+        
+      </ul>
+    </div>
+  </div>
+  <div class="paper">
+    <div class="sidebar-title">
+      标签列表
+    </div>
+    <div class="row">
+      
+        <a href="https://tanglinghan.github.io/tag/fG6OFigaz/" class="badge success">
+          Linux
+        </a>
+      
+        <a href="https://tanglinghan.github.io/tag/qeJTjrwYS/" class="badge secondary">
+          环境安装
+        </a>
+      
+        <a href="https://tanglinghan.github.io/tag/aoMeMNXDl/" class="badge success">
+          Hello
+        </a>
+      
+    </div>
+  </div>
+  <div class="paper">
+    Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://tanglinghan.github.io/atom.xml" target="_blank">RSS</a>
+  </div>
+</div>
 
-  var gitalk = new Gitalk({
-    clientID: 'f31dbffe04c3b6748860',
-    clientSecret: '2262dd7008e765cc75d973a3343da75884449a25',
-    repo: 'tanglinghan.github.io',
-    owner: 'tanglinghan',
-    admin: ['tanglinghan'],
-    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
-    distractionFreeMode: false  // Facebook-like distraction free mode
-  })
 
-  gitalk.render('gitalk-container')
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
 
 </script>
 
-          
 
-          
-        
 
-        <div class="site-footer">
-  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
-  <a class="rss" href="https://tanglinghan.github.io/atom.xml" target="_blank">
-    <i class="ri-rss-line"></i> RSS
-  </a>
-</div>
-
-      </div>
-    </div>
-
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
     <script>
-      hljs.initHighlightingOnLoad()
 
-      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+      var gitalk = new Gitalk({
+        clientID: 'f31dbffe04c3b6748860',
+        clientSecret: '2262dd7008e765cc75d973a3343da75884449a25',
+        repo: 'tanglinghan.github.io',
+        owner: 'tanglinghan',
+        admin: ['tanglinghan'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
 
-      // This should probably be throttled.
-      // Especially because it triggers during smooth scrolling.
-      // https://lodash.com/docs/4.17.10#throttle
-      // You could do like...
-      // window.addEventListener("scroll", () => {
-      //    _.throttle(doThatStuff, 100);
-      // });
-      // Only not doing it here to keep this Pen dependency-free.
-
-      window.addEventListener("scroll", event => {
-        let fromTop = window.scrollY;
-
-        mainNavLinks.forEach((link, index) => {
-          let section = document.getElementById(decodeURI(link.hash).substring(1));
-          let nextSection = null
-          if (mainNavLinks[index + 1]) {
-            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
-          }
-          if (section.offsetTop <= fromTop) {
-            if (nextSection) {
-              if (nextSection.offsetTop > fromTop) {
-                link.classList.add("current");
-              } else {
-                link.classList.remove("current");    
-              }
-            } else {
-              link.classList.add("current");
-            }
-          } else {
-            link.classList.remove("current");
-          }
-        });
-      });
+      gitalk.render('gitalk-container')
 
     </script>
+  
+
+  
+
+
+
+
   </body>
 </html>
