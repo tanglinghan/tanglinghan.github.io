@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>记一次服务器惨遭挖矿 | 山河在</title>
-<link rel="shortcut icon" href="https://tanglinghan.github.io/favicon.ico?v=1615087988606">
+<link rel="shortcut icon" href="https://tanglinghan.github.io/favicon.ico?v=1615088918389">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://tanglinghan.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="记一次服务器惨遭挖矿 | 山河在 - Atom Feed" href="https://tanglinghan.github.io/atom.xml">
@@ -19,8 +19,7 @@
 crontab -l
 
 
-删了它重启crond服务
-systemc..." />
+crontab -e编辑定时任务, 按i..." />
     <meta name="keywords" content="Linux" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -30,7 +29,7 @@ systemc..." />
       <div class="main-content">
         <div class="site-header">
   <a href="https://tanglinghan.github.io">
-  <img class="avatar" src="https://tanglinghan.github.io/images/avatar.png?v=1615087988606" alt="">
+  <img class="avatar" src="https://tanglinghan.github.io/images/avatar.png?v=1615088918389" alt="">
   </a>
   <h1 class="site-title">
     山河在
@@ -111,14 +110,14 @@ systemc..." />
 <pre><code>crontab -l
 </code></pre>
 <p><img src="https://tanglinghan.github.io/post-images/1615086133167.png" alt="" loading="lazy"><br>
-删了它重启crond服务</p>
+<code>crontab -e</code>编辑定时任务, 按<code>i</code>进入编辑模式, 删了这行定时任务, <code>shift+:</code>进入底行命令模式, 输入<code>wq</code>, 保存退出, 重启crond服务</p>
 <pre><code>systemctl restart crond
 </code></pre>
-<ol start="2">
+<ol>
 <li>然后找到挖矿程序进程, kill掉</li>
 </ol>
-<pre><code>ps -aux | grep kinsing
-ps -aux | grep kdevtmpfsi
+<pre><code>ps -ef | grep kinsing
+ps -ef | grep kdevtmpfsi
 </code></pre>
 <p><img src="https://tanglinghan.github.io/post-images/1615086638158.png" alt="" loading="lazy"><br>
 3. 找到源文件, 删除</p>
@@ -139,7 +138,7 @@ rm: remove regular file ‘kinsing’? y
 然后一看定时任务:<br>
 <img src="https://tanglinghan.github.io/post-images/1615087233955.png" alt="" loading="lazy"><br>
 又回来了<br>
-重复上面操作删除定时任务, 重启服务, 通过top命令看到它的PID, <code>kill -9 2627</code><br>
+重复上面操作删除定时任务, 重启定时服务, 通过top命令看到它的PID, <code>kill -9 2627</code><br>
 30秒后.....???</p>
 <pre><code>  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND
  3588 root      20   0  515536   1724    928 S 100.0  0.0   1:30.83 kdevtmpfsi
@@ -147,6 +146,11 @@ rm: remove regular file ‘kinsing’? y
  2024 root      20   0 3715112 338048   7168 S   0.3  8.7   2:57.88 java
  2252 root      20   0 3703328 356088   6640 S   0.3  9.2   3:27.96 java
 </code></pre>
+<p>尝试查找下相关文件</p>
+<pre><code>find / -name kdevtmpfsi
+find / -name kinsing
+</code></pre>
+<p>奇了怪了, 文件删了, 定时任务也删了, 你特么又给我跑起来了.....</p>
 
               </div>
               <div class="toc-container">
